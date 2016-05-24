@@ -39,10 +39,10 @@ fs = require('fs');
 
 // if using express framework, we can define router easier!
 var server = http.createServer(function(req, res){
-fs.readFile(__dirname + '/index.html', function(err, data){
-res.writeHead(200);
-res.end(data);
-});
+  fs.readFile(__dirname + '/index.html', function(err, data){
+    res.writeHead(200);
+    res.end(data);
+  });
 });
 
 // The above code is used for create a server to serve the static index.html file under the current directory. The following part is the main idea of how to use socket.io to construct and listen to events.
@@ -52,15 +52,14 @@ console.log('listen on http://localhost:3000');
 io = socketIO(server);
 
 io.on('connection', function(socket){
-socket.emit('greeting-from-server', {
-greeting: 'Hello client!'
-});
+  socket.emit('greeting-from-server', {
+    greeting: 'Hello client!'
+  });
 
-socket.on('greeting-from-client', function(msg){
-console.log(msg);
+  socket.on('greeting-from-client', function(msg){
+    console.log(msg);
+  });
 });
-});
-
 ```
 
 ```html
@@ -74,12 +73,10 @@ console.log(msg);
 <script>
 var socket = io('http://localhost:3000');
 socket.on('greeting-from-server', function (message) {
-document.body.appendChild(
-document.createTextNode(message.greeting)
-);
-socket.emit('greeting-from-client', {
-greeting: 'Hello Server'
-});
+  document.body.appendChild(document.createTextNode(message.greeting));
+  socket.emit('greeting-from-client', {
+    greeting: 'Hello Server'
+  });
 });
 </script>
 </body>
@@ -98,7 +95,7 @@ socketIO = require('socket.io'),
 server, io;
 
 app.get('/', function (req, res) {
-res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/index.html');
 });
 
 server = http.Server(app);
@@ -106,13 +103,13 @@ server.listen(5000);
 io = socketIO(server);
 
 io.on('connection', function (socket) {
-socket.emit('greeting-from-server', {
-greeting: 'Hello Client'
-});
+  socket.emit('greeting-from-server', {
+    greeting: 'Hello Client'
+  });
 
-socket.on('greeting-from-client', function (message) {
-console.log(message);
-});
+  socket.on('greeting-from-client', function (message) {
+    console.log(message);
+  });
 });
 ```
 
@@ -154,54 +151,54 @@ var sockets = [];
 var ID2user = {}; // username 
 
 io.on('connection', function(socket){
-sockets.push(socket);
+  sockets.push(socket);
 
-var updateUserNum = function(skt){
-var people = sockets.length === 1 ? 'person' : 'people';
-skt.emit('greeting-from-server', {
-greeting: 'Welcome! ' + sockets.length + ' ' + people + ' online now!'
+  var updateUserNum = function(skt){
+    var people = sockets.length === 1 ? 'person' : 'people';
+    skt.emit('greeting-from-server', {
+      greeting: 'Welcome! ' + sockets.length + ' ' + people + ' online now!'
+    });
+  };
+
+  updateUserNum(socket);
+
+  // boardcast?!
+  socket.on('message', function(message){
+  var userlistChanged = false;
+  if(!ID2user[socket.id]){ // if new user comes in.
+  var profile = {
+    username: message.username,
+    avatar: message.avatar
+  };
+  ID2user[socket.id] = profile;
+  userlistChanged = true;
+  }
+  for(var i=0; i < sockets.length; i++){
+    sockets[i].emit('message', message);
+    if(userlistChanged){ // update userlist when new user comes in.
+      console.log(ID2user[socket.id].username + '(id: ' + socket.id + ' )' + 'joins!');
+      sockets[i].emit('userlist', ID2user);
+      updateUserNum(sockets[i]);
+    }
+  }
 });
-};
 
-updateUserNum(socket);
-
-// boardcast?!
-socket.on('message', function(message){
-var userlistChanged = false;
-if(!ID2user[socket.id]){ // if new user comes in.
-var profile = {
-username: message.username,
-avatar: message.avatar
-};
-ID2user[socket.id] = profile;
-userlistChanged = true;
-}
-for(var i=0; i < sockets.length; i++){
-sockets[i].emit('message', message);
-if(userlistChanged){ // update userlist when new user comes in.
-console.log(ID2user[socket.id].username + '(id: ' + socket.id + ' )' + 'joins!');
-sockets[i].emit('userlist', ID2user);
-updateUserNum(sockets[i]);
-}
-}
-});
-
-socket.on('disconnect', function(){
-for(var i=0; i<sockets.length; i++){
-if(sockets[i].id === socket.id){
-sockets.splice(i, 1);
-}
-}
-var usernameOut = ID2user[socket.id].username;
-delete ID2user[socket.id]; // remove user from online users.
-// send to client an updated userlist.
-for(var i=0; i < sockets.length; i++){
-console.log(usernameOut + '(id: ' + socket.id + ' )' + 'leaves...');
-sockets[i].emit('userlist', ID2user);
-updateUserNum(sockets[i]);
-}
-console.log("There are " + sockets.length + " active sockets remaining.");
-});
+  socket.on('disconnect', function(){
+    for(var i=0; i<sockets.length; i++){
+      if(sockets[i].id === socket.id){
+        sockets.splice(i, 1);
+      }
+    }
+    var usernameOut = ID2user[socket.id].username;
+    delete ID2user[socket.id]; // remove user from online users.
+    // send to client an updated userlist.
+    for(var i=0; i < sockets.length; i++){
+    console.log(usernameOut + '(id: ' + socket.id + ' )' + 'leaves...');
+    sockets[i].emit('userlist', ID2user);
+    updateUserNum(sockets[i]);
+  }
+  console.log("There are " + sockets.length + " active sockets remaining.");
+  });
 });
 ```
 
@@ -258,16 +255,16 @@ msgWrapper.scrollTop = msgWrapper.scrollHeight;
 
 // MAIN IDEA: when user list need to update, do it!
 socket.on('userlist', function(userlist){
-$('#userlist').empty();
-$('<h2></h2>').text('Online users:').appendTo($('#userlist'));
-Object.keys(userlist).map(function(d){
-var usrImg = $('<img></img>').attr('src', userlist[d].avatar);
-var usrName = $('<div></div>').text(userlist[d].username).addClass('listname');
-var profileWrapper = $('<div></div>').addClass('userlistProfile');
-usrImg.appendTo(profileWrapper);
-usrName.appendTo(profileWrapper);
-profileWrapper.appendTo($('#userlist'));
-})
+  $('#userlist').empty();
+  $('<h2></h2>').text('Online users:').appendTo($('#userlist'));
+  Object.keys(userlist).map(function(d){
+  var usrImg = $('<img></img>').attr('src', userlist[d].avatar);
+  var usrName = $('<div></div>').text(userlist[d].username).addClass('listname');
+  var profileWrapper = $('<div></div>').addClass('userlistProfile');
+  usrImg.appendTo(profileWrapper);
+  usrName.appendTo(profileWrapper);
+  profileWrapper.appendTo($('#userlist'));
+  })
 });
 
 });
