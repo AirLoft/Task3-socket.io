@@ -10,7 +10,7 @@ socket是对TCP/IP协议的封装， 本身是一个调用接口， 也就是我
 
 而什么是TCP呢？
 
-Transmission Control Protocol (TCP) 就是其中发送文本信息的**规则规范**而已。 TCP依赖更底层的函数实现来在网络上传输binary data。 这里和大家介绍telnet\putty这些利用TCP在command line上帮助你发送和接受纯文本消息的应用， 你可以利用telnet来， 比如， 发送消息到google.com：`telnet google.com 80` 在端口80连接到google.com(80默认给网络请求)。我们当然不会随便发文本消息给google.com， 因为我们知道google.com不会接受随意的， 没有结构的文本请求。 是的， 我们需要一个**标准(protocol)**来规范交流的方式。我们在浏览器输出http://google.com， 这意味着：
+Transmission Control Protocol (TCP) 就是其中发送文本信息的**规则规范**而已。 TCP依赖更底层的函数实现来在网络上传输binary data。 这里和大家介绍telnet\putty这些利用TCP在command line上帮助你发送和接受纯文本消息的应用， 你可以利用telnet来， 比如， 发送消息到google.com：`telnet google.com 80` 在端口80连接到google.com(80默认给网络请求)。我们当然不会随便发文本消息给google.com， 因为我们知道google.com不会接受随意的， 没有结构的文本请求。 是的， 我们需要一个**标准(protocol)**来规范交流的方式。我们在浏览器输出http://google.com 这意味着：
 
 - 在port 80用TCP协议连接google.com的服务器。
 - 请求返回资源“／”（默认资源）。
