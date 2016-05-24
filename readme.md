@@ -274,6 +274,7 @@ socket.on('userlist', function(userlist){
 
 完成一个小demo的开发同样会需要很多边角料信息的补充， 没有人会记得所有javascript各种处理对象的函数， 也没有人需要记得。留个note给自己， 也再以后查纠的之后方便回忆。
 
+- [博客原文链接](http://chocoluffy.com/2016/05/23/socket-io%E5%BC%80%E5%8F%91%E5%A4%9A%E4%BA%BA%E8%81%8A%E5%A4%A9%E5%AE%A4%E6%95%99%E7%A8%8B/)
 - [A Simple Introduction To Computer Networking](http://betterexplained.com/articles/a-simple-introduction-to-computer-networking/)
 - `array.splice(i, 1);` will remove one item from ith index in that array, namely, in this case, remove the ith item from array.
 - `docuemnt.createTextNode(string) \ document.createElement('div'); \  document.getElementById('SOMEID').appendChild(element); ` are some common DOM objects munipulations example.
@@ -284,3 +285,7 @@ socket.on('userlist', function(userlist){
 - add user a good-looking avatar! [adorable avatar!](https://github.com/adorableio/avatars-api)
 - change html input focus, refer to this post: [html input focus](https://api.jquery.com/focus/)
 - auto-adjust the scrolling top to the latest message, refer to this post: [srollTop = scrollHeight](http://stackoverflow.com/questions/15432691/css-overflow-value-for-chat)
+
+## 第三周任务
+
+根据你对socket.io的使用情况和了解， 尝试更多real-time server-client communication的小项目， 并发布在AirLoft org下大家peer review. 可以参考的方向是尝试去模仿常用app比如facebook\whatsapp\telegram的UI来实现相同的逻辑， 毕竟核心的server-client要点并不难， 这篇tut也覆盖了大部分的socket实现方式， 在实战中更有挑战性的任务是在高并发的场景下如何优化架构， 节省计算资源的问题。举个🌰， whatsapp团队仅仅用50名工程师便支撑起了9亿的用户使用量， 这个高I/O的场景具体优化会是更难也更有趣的话题了， 有机会和大家讨论讨论。
