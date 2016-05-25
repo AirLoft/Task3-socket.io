@@ -274,7 +274,7 @@ socket.on('userlist', function(userlist){
 
 完成一个小demo的开发同样会需要很多边角料信息的补充， 没有人会记得所有javascript各种处理对象的函数， 也没有人需要记得。留个note给自己， 也再以后查纠的之后方便回忆。
 
-- [博客原文链接](http://chocoluffy.com/2016/05/23/socket-io%E5%BC%80%E5%8F%91%E5%A4%9A%E4%BA%BA%E8%81%8A%E5%A4%A9%E5%AE%A4%E6%95%99%E7%A8%8B/)
+- [chocoluffy博客原文链接](http://chocoluffy.com/2016/05/23/socket-io%E5%BC%80%E5%8F%91%E5%A4%9A%E4%BA%BA%E8%81%8A%E5%A4%A9%E5%AE%A4%E6%95%99%E7%A8%8B/)
 - [A Simple Introduction To Computer Networking](http://betterexplained.com/articles/a-simple-introduction-to-computer-networking/)
 - `array.splice(i, 1);` will remove one item from ith index in that array, namely, in this case, remove the ith item from array.
 - `docuemnt.createTextNode(string) \ document.createElement('div'); \  document.getElementById('SOMEID').appendChild(element); ` are some common DOM objects munipulations example.
